@@ -18,7 +18,10 @@ const placeholder =
 				@error="($event.target as HTMLImageElement).src = placeholder"
 			/>
 		</div>
-		<button class="no-result__back" @click="router.push('/')">
+		<button
+			class="no-result__back"
+			@click="router.push({ path: '/', query: { fromSad: '1' } })"
+		>
 			Изменить свое решение
 		</button>
 	</main>

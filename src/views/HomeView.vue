@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, watch } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
+const showOnlyYes = computed(() => !!route.query.fromSad);
 const noClickCount = ref(0);
 const noButtonPosition = ref<{ left: string; top: string } | null>(null);
 const noButtonRef = ref<HTMLButtonElement | null>(null);
@@ -110,6 +112,7 @@ watch(showSuccess, (v) => {
 			<div v-if="showInitialButtons" class="home-buttons">
 				<button class="home-button" @click="onYesClick">Да</button>
 				<button
+					v-if="!showOnlyYes"
 					ref="noButtonRef"
 					class="home-button home-button--no"
 					:style="noButtonStyle"
@@ -121,7 +124,9 @@ watch(showSuccess, (v) => {
 
 			<div v-if="showConfirmButtons" class="home-buttons">
 				<button class="home-button" @click="onYesClick">Да</button>
-				<button class="home-button" @click="onNoClick">Нет</button>
+				<button v-if="!showOnlyYes" class="home-button" @click="onNoClick">
+					Нет
+				</button>
 			</div>
 		</template>
 	</main>
